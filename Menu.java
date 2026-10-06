@@ -35,7 +35,7 @@ public class Menu {
                     break;
 
                 case 5:
-                    agendamiento = m.atenderTurnoSiguiente(agendamiento);
+                    agendamiento = m.atenderTurnoSiguiente(agendamiento, v, sc);
                     break;
 
                 case 0:

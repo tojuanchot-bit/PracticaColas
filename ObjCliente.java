@@ -6,16 +6,18 @@ public class ObjCliente {
     private boolean prioridad;
     private int turno;
     private int estado = 1; //atendido o no
+    private int edad;
     
     public ObjCliente() {
     }
 
-    public ObjCliente(int identificacion, String nombre, String tipoTramite, boolean prioridad, int turno) {
+    public ObjCliente(int edad, int identificacion, String nombre, String tipoTramite, boolean prioridad, int turno) {
         this.identificacion = identificacion;
         this.nombre = nombre;
         this.tipoTramite = tipoTramite;
         this.prioridad = prioridad;
         this.turno = turno;
+        this.edad = edad;
     }
 
     public int getIdentificacion() {
@@ -64,5 +66,13 @@ public class ObjCliente {
 
     public void setEstado(int estado) {
         this.estado = estado;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
     }   
 }

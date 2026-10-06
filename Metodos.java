@@ -28,12 +28,16 @@ public class Metodos {
         System.out.println("Ingrese nombre: ");
         sc.nextLine();
         o.setNombre(sc.nextLine());
+        System.out.println("Ingrese su edad: ");
+        o.setEdad(v.ValidarEntero(sc));
+        sc.nextLine();
         System.out.println("Ingrese tipo de tramite: ");
         o.setTipoTramite(asignarTipoTramite(v, sc));
         System.out.println("¿Prioritario? (1. Sí / 2. No)");
         o.setPrioridad(asignarPrioridad(v, sc));
         sc.nextLine();
         o.setTurno(asignarTurno());
+
 
         agendamiento.offer(o);
 
@@ -99,16 +103,13 @@ public class Metodos {
 
     public void mostrarTodosLosTurnos(Queue<ObjCliente> agendamiento) {
         for (ObjCliente objCliente : agendamiento) {
-            System.out.println("Turno: " + objCliente.getTurno());
-            System.out.println("Nombre: " + objCliente.getNombre());
-            System.out.println("Identificación: " + objCliente.getIdentificacion());
             if (objCliente.isPrioridad()) {
                 System.out.println("Turno prioritario.");
             } else {
                 System.out.println("Turno no prioritario. ");
             }
-            System.out.println("Servicio: " + objCliente.getTipoTramite());
-            System.out.println("--------------------------------------");
+            mostrarCliente(objCliente);
+
         }
     }
 
@@ -127,62 +128,81 @@ public class Metodos {
 
                 if(objCliente.isPrioridad() && objCliente.getEstado() == estado){
                 System.out.println("PRIORITARIO:");
-                System.out.println("Turno: " + objCliente.getTurno());
-                System.out.println("Nombre: " + objCliente.getNombre());
-                System.out.println("Identificación: " + objCliente.getIdentificacion());
-                System.out.println("Servicio: " + objCliente.getTipoTramite());
-                System.out.println("--------------------------------------");
+                mostrarCliente(objCliente);
                 }
 
                 if(!objCliente.isPrioridad() && objCliente.getEstado() == estado){
                 System.out.println("NO PRIORITARIO.");
-                System.out.println("Turno: " + objCliente.getTurno());
-                System.out.println("Nombre: " + objCliente.getNombre());
-                System.out.println("Identificación: " + objCliente.getIdentificacion());
-                System.out.println("Servicio: " + objCliente.getTipoTramite());
-                System.out.println("--------------------------------------");
+                mostrarCliente(objCliente);
                 }
             }
         }    
     }
      
 
-    public Queue<ObjCliente> atenderTurnoSiguiente(Queue<ObjCliente> agendamiento) {
+    public Queue<ObjCliente> atenderTurnoSiguiente(Queue<ObjCliente> agendamiento, Validaciones v, Scanner sc) {
 
         if (agendamiento.isEmpty()) {
             System.out.println("No hay turnos agendados.");
-            return agendamiento; 
+            return agendamiento;
         } else {
 
             for (ObjCliente objCliente : agendamiento) {
+
                 if (objCliente.isPrioridad() && objCliente.getEstado() == 1) {
                     System.out.println("Atendiendo TURNO PRIORITARIO");
-                    System.out.println("Turno: " + objCliente.getTurno());
-                    System.out.println("Nombre: " + objCliente.getNombre());
-                    System.out.println("Identificación: " + objCliente.getIdentificacion());
-                    System.out.println("Servicio: " + objCliente.getTipoTramite());
-                    objCliente.setEstado(2);
-                    System.out.println("--------------------------------------");
+                    mostrarCliente(objCliente);
+                    System.out.println(marcarComoAtendido(sc, objCliente, v));
                     return agendamiento;
                 }
-
             }
 
-            for (ObjCliente objCliente : agendamiento) {
-                if(!objCliente.isPrioridad() && objCliente.getEstado() == 1) {
-                    System.out.println("atendientdo turno NO PRIORITARIO.");
-                    System.out.println("Turno: " + objCliente.getTurno());
-                    System.out.println("Nombre: " + objCliente.getNombre());
-                    System.out.println("Identificación: " + objCliente.getIdentificacion());
-                    System.out.println("Servicio: " + objCliente.getTipoTramite());
-                    objCliente.setEstado(2);
-                    System.out.println("--------------------------------------");
-                    return agendamiento;
-                }
-                
+        }
+
+        for (ObjCliente objCliente : agendamiento) {
+            if (!objCliente.isPrioridad() && objCliente.getEstado() == 1) {
+                System.out.println("atendiendo turno NO PRIORITARIO.");
+                mostrarCliente(objCliente);
+                System.out.println(marcarComoAtendido(sc, objCliente, v));
+                return agendamiento;
             }
+
         }
         return agendamiento;
+     }
+
+    public void mostrarCliente (ObjCliente o){
+        System.out.println("Turno: " + o.getTurno());
+        System.out.println("Nombre: " + o.getNombre());
+        System.out.println("Identificación: " + o.getIdentificacion());
+        System.out.println("Edad: " + o.getEdad());
+        System.out.println("Servicio: " + o.getTipoTramite());
+        System.out.println("--------------------------------------");
     }
 
+    public String marcarComoAtendido(Scanner sc, ObjCliente o, Validaciones v){
+        boolean asignado = false;
+        String mensaje = "";
+        while (!asignado) {
+            System.out.println("¿Marcar como atendido? (1.Sí / 2.No)");
+            int opt = v.ValidarEntero(sc);
+            switch (opt) {
+                case 1:
+                    o.setEstado(2);
+                    mensaje = "Se marcó como atendido.";
+                    asignado = true;
+                    break;
+                
+                case 2:
+                    mensaje = "Se retorna a lista de pendientes.";
+                    asignado = true;
+                break;
+
+                default:
+                    System.out.println("Ingrese una opción válida (1 / 2)");
+                break;
+            }
+        }
+        return mensaje;
+    }
 }
