@@ -13,6 +13,9 @@ public class Metodos {
         System.out.println("4. Mostrar atendidos.");
         System.out.println("5. Atender siguiente.");
         System.out.println("6. Buscar cliente.");
+        System.out.println("7. Cambiar prioridad.");
+        System.out.println("8. Cancelar turno.");
+        System.out.println("9. Mostrar cancelados.");
         System.out.println("0. Salir.");
         System.out.print("Ingrese una opción: ");
         int opt = v.ValidarEntero(sc);
@@ -210,7 +213,7 @@ public class Metodos {
     public ObjCliente buscarCliente (Scanner sc, Queue<ObjCliente> agendamiento, Validaciones v){
         ObjCliente obj = null;
 
-        System.out.println("Ingrese la identificación del cliente a buscar");
+        System.out.println("Ingrese la identificación del cliente a buscar: ");
         int id = v.ValidarEntero(sc);
         for (ObjCliente o : agendamiento) {
             if (o.getIdentificacion() == id) {
@@ -227,6 +230,33 @@ public class Metodos {
             System.out.println("Cliente no encontrado");
         }
         return obj;
+    }
 
+    public Queue<ObjCliente> cambiarPrioridad(Scanner sc, Queue <ObjCliente> agendamiento, Validaciones v){
+        ObjCliente o = buscarCliente(sc, agendamiento, v);
+        if (o != null) {
+            o.setPrioridad(true);
+            System.out.println("Prioridad actualizada.");            
+        } else {
+            System.out.println("No se pudo modificar la prioridad.");
+        }
+        return agendamiento;
+    }
+
+    public Queue<ObjCliente> cancelarClientes(Scanner sc, Queue <ObjCliente> agendamiento, Validaciones v){
+
+        ObjCliente o = buscarCliente(sc, agendamiento, v);
+        
+        if (o != null) {
+            if (o.getEstado() == 1) {
+                System.out.println("Turno cancelado.");
+                o.setEstado(3);
+            } else if (o.getEstado() == 2) {
+                System.out.println("No se puede cancelar, el turno ya ha sido atendido.");
+            } else if (o.getEstado() == 3) {
+                System.out.println("No se puede cancelar, el turno ya fue cancelado.");
+            }
+        }
+        return agendamiento;
     }
 }

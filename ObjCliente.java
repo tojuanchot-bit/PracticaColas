@@ -5,7 +5,7 @@ public class ObjCliente {
     private String tipoTramite;
     private boolean prioridad;
     private int turno;
-    private int estado = 1; //atendido o no
+    private int estado = 1; //1. pendiente, 2. atendido, 3. cancelado.
     private int edad;
     
     public ObjCliente() {

@@ -28,10 +28,12 @@ public class Menu {
                     break;
 
                 case 3:
+                    System.out.println("Turnos pendientes: ");
                     m.mostrarSegunPendiente(agendamiento, 1);
                     break;                
 
                 case 4:
+                    System.out.println("Turnos atendidos: ");
                     m.mostrarSegunPendiente(agendamiento, 2);
                     break;
 
@@ -41,6 +43,19 @@ public class Menu {
 
                 case 6:
                     o = m.buscarCliente(sc, agendamiento, v);
+                    break;
+
+                case 7:
+                    agendamiento = m.cambiarPrioridad(sc, agendamiento, v);
+                    break;
+
+                case 8: 
+                    agendamiento = m.cancelarClientes(sc, agendamiento, v);
+                    break;
+
+                case 9:
+                    System.out.println("Turnos cancelados: ");
+                    m.mostrarSegunPendiente(agendamiento, 3);
                     break;
 
                 case 0:
