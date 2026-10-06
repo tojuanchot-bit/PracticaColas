@@ -10,6 +10,7 @@ public class Menu {
         Metodos m = new Metodos();
         Validaciones v = new Validaciones();
         Queue<ObjCliente> agendamiento = new LinkedList<>();
+        ObjCliente o = new ObjCliente();
 
         System.out.println("Ejercicio 1 'Banco, Atención preferencial'");
         System.out.println("--------------------------------------");
@@ -36,6 +37,10 @@ public class Menu {
 
                 case 5:
                     agendamiento = m.atenderTurnoSiguiente(agendamiento, v, sc);
+                    break;
+
+                case 6:
+                    o = m.buscarCliente(sc, agendamiento, v);
                     break;
 
                 case 0:

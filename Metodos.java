@@ -12,6 +12,7 @@ public class Metodos {
         System.out.println("3. Mostras pendientes.");
         System.out.println("4. Mostrar atendidos.");
         System.out.println("5. Atender siguiente.");
+        System.out.println("6. Buscar cliente.");
         System.out.println("0. Salir.");
         System.out.print("Ingrese una opción: ");
         int opt = v.ValidarEntero(sc);
@@ -204,5 +205,28 @@ public class Metodos {
             }
         }
         return mensaje;
+    }
+
+    public ObjCliente buscarCliente (Scanner sc, Queue<ObjCliente> agendamiento, Validaciones v){
+        ObjCliente obj = null;
+
+        System.out.println("Ingrese la identificación del cliente a buscar");
+        int id = v.ValidarEntero(sc);
+        for (ObjCliente o : agendamiento) {
+            if (o.getIdentificacion() == id) {
+                obj = o;
+                break;
+            }
+
+        }
+
+        if (obj != null) {
+            System.out.println("Cliente encontrado.");
+            mostrarCliente(obj);
+        } else {
+            System.out.println("Cliente no encontrado");
+        }
+        return obj;
+
     }
 }
