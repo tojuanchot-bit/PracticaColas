@@ -9,13 +9,16 @@ public class Metodos {
         System.out.println("Listado de opciones: ");
         System.out.println("1. Registrar usuario");
         System.out.println("2. Mostrar todos los turnos. ");
-        System.out.println("3. Mostras pendientes.");
+        System.out.println("3. Mostrar pendientes.");
         System.out.println("4. Mostrar atendidos.");
         System.out.println("5. Atender siguiente.");
         System.out.println("6. Buscar cliente.");
         System.out.println("7. Cambiar prioridad.");
         System.out.println("8. Cancelar turno.");
         System.out.println("9. Mostrar cancelados.");
+        System.out.println("10. Mostrar cuantos turnos pendientes hay.");
+        System.out.println("11. Mostrar cuantos turnos prioritarios pendientes hay.");
+        System.out.println("12. Mostrar cuantos turnos no prioritarios pendiente hay.");
         System.out.println("0. Salir.");
         System.out.print("Ingrese una opción: ");
         int opt = v.ValidarEntero(sc);
@@ -258,5 +261,35 @@ public class Metodos {
             }
         }
         return agendamiento;
+    }
+
+    public int contarTodosLosPendientes(Queue<ObjCliente> agendamiento){
+        int contador = 0;
+        for (ObjCliente o : agendamiento) {
+            if (o.getEstado() == 1){
+                contador++;
+            }
+        }
+        return contador;
+    }
+
+    public int contarTodosLosPendientesPrioritarios(Queue<ObjCliente> agendamiento){
+        int contador = 0;
+        for (ObjCliente o : agendamiento) {
+            if (o.getEstado() == 1 && o.isPrioridad()){
+                contador++;
+            }
+        }
+        return contador;
+    }
+
+    public int contarTodosLosPendientesNoPrioritarios(Queue<ObjCliente> agendamiento){
+        int contador = 0;
+        for (ObjCliente o : agendamiento) {
+            if (o.getEstado() == 1 && !o.isPrioridad()){
+                contador++;
+            }
+        }
+        return contador;
     }
 }

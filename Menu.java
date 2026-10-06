@@ -58,6 +58,18 @@ public class Menu {
                     m.mostrarSegunPendiente(agendamiento, 3);
                     break;
 
+                case 10:
+                    System.out.println("Hay " + m.contarTodosLosPendientes(agendamiento) + " turnos pendientes.");
+                    break;
+
+                case 11:
+                    System.out.println("Hay " + m.contarTodosLosPendientesPrioritarios(agendamiento) + " turnos prioritarios pendientes.");
+                    break;
+
+                case 12:
+                    System.out.println("Hay " + m.contarTodosLosPendientesNoPrioritarios(agendamiento) + " turnos no prioritarios pendientes.");    
+                    break;
+
                 case 0:
                     System.out.println("Saliendo...");
                     continuar = false;
