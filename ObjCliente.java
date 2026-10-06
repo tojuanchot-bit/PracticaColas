@@ -5,6 +5,7 @@ public class ObjCliente {
     private String tipoTramite;
     private boolean prioridad;
     private int turno;
+    private int estado = 1; //atendido o no
     
     public ObjCliente() {
     }
@@ -56,5 +57,12 @@ public class ObjCliente {
     public void setTurno(int turno) {
         this.turno = turno;
     }
-    
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }   
 }

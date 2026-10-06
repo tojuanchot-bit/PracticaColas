@@ -23,10 +23,22 @@ public class Menu {
                     break;
 
                 case 2:
-                    m.mostrarTurnosPendientes(agendamiento);
+                    m.mostrarTodosLosTurnos(agendamiento);
                     break;
 
                 case 3:
+                    m.mostrarSegunPendiente(agendamiento, 1);
+                    break;                
+
+                case 4:
+                    m.mostrarSegunPendiente(agendamiento, 2);
+                    break;
+
+                case 5:
+                    agendamiento = m.atenderTurnoSiguiente(agendamiento);
+                    break;
+
+                case 0:
                     System.out.println("Saliendo...");
                     continuar = false;
                     break;

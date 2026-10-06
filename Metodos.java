@@ -5,17 +5,22 @@ public class Metodos {
 
     private int contadorTurnos = 0;
 
-    public int opcionesMenu1 (Scanner sc, Validaciones v){
+    public int opcionesMenu1(Scanner sc, Validaciones v) {
         System.out.println("Listado de opciones: ");
         System.out.println("1. Registrar usuario");
-        System.out.println("2. Mostrar todos los turnos pendientes. ");
-        System.out.println("3. Salir.");
+        System.out.println("2. Mostrar todos los turnos. ");
+        System.out.println("3. Mostras pendientes.");
+        System.out.println("4. Mostrar atendidos.");
+        System.out.println("5. Atender siguiente.");
+        System.out.println("0. Salir.");
         System.out.print("Ingrese una opción: ");
         int opt = v.ValidarEntero(sc);
+        System.out.println("--------------------------------------");
         return opt;
     }
 
-    public Queue<ObjCliente> registrarUsuario (Queue<ObjCliente> agendamiento, ObjCliente o, Validaciones v, Scanner sc){
+    public Queue<ObjCliente> registrarUsuario(Queue<ObjCliente> agendamiento, ObjCliente o, Validaciones v,
+            Scanner sc) {
 
         System.out.println("Bienvenido a BancaRota");
         System.out.println("Ingrese su numero de identificación: ");
@@ -35,10 +40,10 @@ public class Metodos {
         return agendamiento;
     }
 
-    public Boolean asignarPrioridad (Validaciones v, Scanner sc){
-         boolean prioridad = false, valido = false;
+    public Boolean asignarPrioridad(Validaciones v, Scanner sc) {
+        boolean prioridad = false, valido = false;
 
-         while (!valido) {
+        while (!valido) {
             int opt = v.ValidarEntero(sc);
             if (opt == 1) {
                 prioridad = true;
@@ -55,7 +60,7 @@ public class Metodos {
         return prioridad;
     }
 
-    public String asignarTipoTramite (Validaciones v, Scanner sc){
+    public String asignarTipoTramite(Validaciones v, Scanner sc) {
         String tipoTramite = "";
 
         while (tipoTramite.equals("")) {
@@ -92,7 +97,7 @@ public class Metodos {
         return contadorTurnos;
     }
 
-    public String mostrarTurnosPendientes(Queue<ObjCliente> agendamiento){
+    public void mostrarTodosLosTurnos(Queue<ObjCliente> agendamiento) {
         for (ObjCliente objCliente : agendamiento) {
             System.out.println("Turno: " + objCliente.getTurno());
             System.out.println("Nombre: " + objCliente.getNombre());
@@ -103,8 +108,81 @@ public class Metodos {
                 System.out.println("Turno no prioritario. ");
             }
             System.out.println("Servicio: " + objCliente.getTipoTramite());
+            System.out.println("--------------------------------------");
         }
-        return "Turnos mostrados";
+    }
+
+
+    public void mostrarSegunPendiente(Queue<ObjCliente> agendamiento, int estado) {
+        if (agendamiento.isEmpty()) {
+            System.out.println("No hay turnos agendados.");
+        } else {
+        
+            for (ObjCliente objCliente : agendamiento) {
+
+                if (agendamiento.isEmpty()) {
+                    System.out.println("No hay agendamientos hasta el momento.");
+                    return;
+                }
+
+                if(objCliente.isPrioridad() && objCliente.getEstado() == estado){
+                System.out.println("PRIORITARIO:");
+                System.out.println("Turno: " + objCliente.getTurno());
+                System.out.println("Nombre: " + objCliente.getNombre());
+                System.out.println("Identificación: " + objCliente.getIdentificacion());
+                System.out.println("Servicio: " + objCliente.getTipoTramite());
+                System.out.println("--------------------------------------");
+                }
+
+                if(!objCliente.isPrioridad() && objCliente.getEstado() == estado){
+                System.out.println("NO PRIORITARIO.");
+                System.out.println("Turno: " + objCliente.getTurno());
+                System.out.println("Nombre: " + objCliente.getNombre());
+                System.out.println("Identificación: " + objCliente.getIdentificacion());
+                System.out.println("Servicio: " + objCliente.getTipoTramite());
+                System.out.println("--------------------------------------");
+                }
+            }
+        }    
+    }
+     
+
+    public Queue<ObjCliente> atenderTurnoSiguiente(Queue<ObjCliente> agendamiento) {
+
+        if (agendamiento.isEmpty()) {
+            System.out.println("No hay turnos agendados.");
+            return agendamiento; 
+        } else {
+
+            for (ObjCliente objCliente : agendamiento) {
+                if (objCliente.isPrioridad() && objCliente.getEstado() == 1) {
+                    System.out.println("Atendiendo TURNO PRIORITARIO");
+                    System.out.println("Turno: " + objCliente.getTurno());
+                    System.out.println("Nombre: " + objCliente.getNombre());
+                    System.out.println("Identificación: " + objCliente.getIdentificacion());
+                    System.out.println("Servicio: " + objCliente.getTipoTramite());
+                    objCliente.setEstado(2);
+                    System.out.println("--------------------------------------");
+                    return agendamiento;
+                }
+
+            }
+
+            for (ObjCliente objCliente : agendamiento) {
+                if(!objCliente.isPrioridad() && objCliente.getEstado() == 1) {
+                    System.out.println("atendientdo turno NO PRIORITARIO.");
+                    System.out.println("Turno: " + objCliente.getTurno());
+                    System.out.println("Nombre: " + objCliente.getNombre());
+                    System.out.println("Identificación: " + objCliente.getIdentificacion());
+                    System.out.println("Servicio: " + objCliente.getTipoTramite());
+                    objCliente.setEstado(2);
+                    System.out.println("--------------------------------------");
+                    return agendamiento;
+                }
+                
+            }
+        }
+        return agendamiento;
     }
 
 }
